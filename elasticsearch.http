@@ -380,9 +380,9 @@ GET http://localhost:9200/_aliases
 GET http://localhost:9200/order/_search
 
 ### search to products
-GET http://localhost:9200/products/_search
+GET http://localhost:9200/order/_search
 
-### select total, customer_id, items.product_id from order
+### select total, customer_id, items.product_d from order
 GET http://localhost:9200/order/_search?_source_includes=total,customer_id,items.product_id
 
 ### select *, exclude price from products
@@ -438,17 +438,17 @@ POST http://localhost:9200/_aliases
 Content-Type: application/json
 
 {
-  "actions": [
+  "actions" : [
     {
-      "remove": {
-        "alias": "customer",
-        "index": "customers"
+      "remove" : {
+        "alias" : "customer",
+        "index" : "customers"
       }
     },
     {
-      "add": {
-        "alias": "customer",
-        "index": "customers_v2"
+      "add" : {
+        "alias" : "customer",
+        "index" : "customers_v2"
       }
     }
   ]
@@ -465,3 +465,37 @@ POST http://localhost:9200/_bulk
 Content-Type: application/json
 
 < customers.json
+
+### update customers_v2 mapping
+PUT http://localhost:9200/customers_v2/_mapping
+Content-Type: application/json
+
+{
+  "properties" : {
+    "address" : {
+      "properties" : {
+        "street" : {
+          "type" : "text"
+        },
+        "city" : {
+          "type" : "text"
+        },
+        "province" : {
+          "type" : "text"
+        },
+        "country" : {
+          "type" : "text"
+        },
+        "zip_code" : {
+          "type" : "keyword"
+        }
+      }
+    }
+  }
+}
+
+### insert customers
+POST http://localhost:9200/_bulk
+Content-Type: application/json
+
+< customers-with-adresses.json
