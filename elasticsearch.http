@@ -179,3 +179,47 @@ HEAD http://localhost:9200/customers/_doc/hendy
 ### check customer not found
 HEAD http://localhost:9200/customers/_doc/salah
 
+### get products 1 and 2
+GET http://localhost:9200/products/_mget
+Content-Type: application/json
+
+{
+  "ids": [
+    "1", "2"
+  ]
+}
+
+### get order 1 and customer hendy
+GET http://localhost:9200/_mget
+Content-Type: application/json
+
+{
+  "docs": [
+    {
+      "_id": "1",
+      "_index": "orders"
+    },
+    {
+      "_id": "hendy",
+      "_index": "customers"
+    }
+  ]
+}
+
+### search API, bisa get (jika tanpa body)
+POST http://localhost:9200/_search
+
+### search API all products, bisa get (jika tanpa body)
+POST http://localhost:9200/products/_search
+
+### search all products page 1
+POST http://localhost:9200/products/_search?size=1&from=0
+
+### search all products page 2
+POST http://localhost:9200/products/_search?size=1&from=1
+
+### search all products sort by price
+POST http://localhost:9200/products/_search?sort=price:asc
+
+### search all products sort by name, (tipe data text tidak dapat disort harus diconvert)
+POST http://localhost:9200/products/_search?sort=name:desc
