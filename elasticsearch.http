@@ -161,3 +161,21 @@ Content-Type: application/json
 ### get orders mapping
 GET http://localhost:9200/orders/_mapping
 
+### get api customer hendy
+GET http://localhost:9200/customers/_doc/hendy
+
+### get api customer not found
+GET http://localhost:9200/customers/_doc/salah
+
+### get source customer hendy
+GET http://localhost:9200/customers/_source/hendy
+
+### get source customer not found
+GET http://localhost:9200/customers/_source/salah
+
+### check customer hendy
+HEAD http://localhost:9200/customers/_doc/hendy
+
+### check customer not found
+HEAD http://localhost:9200/customers/_doc/salah
+
