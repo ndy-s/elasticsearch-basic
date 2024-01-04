@@ -499,3 +499,38 @@ POST http://localhost:9200/_bulk
 Content-Type: application/json
 
 < customers-with-adresses.json
+
+### update customers_v2 mapping
+PUT http://localhost:9200/customers_v2/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "hobbies": {
+      "type": "text"
+    },
+    "banks": {
+      "properties": {
+        "name": {
+          "type": "text"
+        },
+        "account_number": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+
+### get customers_v2 mapping
+GET http://localhost:9200/customers_v2/_mapping
+
+### bulk index customers_v2
+POST http://localhost:9200/_bulk
+Content-Type: application/json
+
+< customers-with-hobbies-and-banks.json
+
+### search customer
+POST http://localhost:9200/customer/_search
+
