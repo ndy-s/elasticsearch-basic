@@ -251,5 +251,18 @@ Content-Type: application/json
   "price": 25000000
 }
 
+### get product 5
+GET http://localhost:9200/products/_doc/5
+
+### update price for product 5
+POST http://localhost:9200/products/_update/5
+Content-Type: application/json
+
+{
+  "doc": {
+    "price": "30000000"
+  }
+}
+
 ### index api, search all products
 POST http://localhost:9200/products/_search
