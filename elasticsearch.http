@@ -93,3 +93,71 @@ Content-Type: application/json
 {
   "numeric_detection": true
 }
+
+### create customer hendy
+POST http://localhost:9200/customers/_create/hendy
+Content-Type: application/json
+
+{
+  "name": "Hendy Saputra",
+  "register_at": "2023-10-10 00:00:00"
+}
+
+### create customer hendy failed
+POST http://localhost:9200/customers/_create/hendy
+Content-Type: application/json
+
+{
+  "name": "Hendy Saputra",
+  "register_at": "ini salah"
+}
+
+### get customers mapping
+GET http://localhost:9200/customers/_mapping
+
+### create product 1
+POST http://localhost:9200/products/_create/1
+Content-Type: application/json
+
+{
+  "name": "Indomie Ayam Bawang",
+  "price": "2000"
+}
+
+### create product 2
+POST http://localhost:9200/products/_create/2
+Content-Type: application/json
+
+{
+  "name": "Mie Sedap Soto",
+  "price": 2000
+}
+
+### get products mapping
+GET http://localhost:9200/products/_mapping
+
+### create order 1
+POST http://localhost:9200/orders/_create/1
+Content-Type: application/json
+
+{
+  "order_date": "2023-09-09 00:00:00",
+  "customer_id": "hendy",
+  "total": "8000",
+  "items": [
+    {
+      "product_id": "1",
+      "price": "2000",
+      "quantity": "2"
+    },
+    {
+      "product_id": "2",
+      "price": "2000",
+      "quantity": "2"
+    }
+  ]
+}
+
+### get orders mapping
+GET http://localhost:9200/orders/_mapping
+
