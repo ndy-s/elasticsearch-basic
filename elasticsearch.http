@@ -534,3 +534,73 @@ Content-Type: application/json
 ### search customer
 POST http://localhost:9200/customer/_search
 
+### search customer using match_all
+POST http://localhost:9200/customer/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### search customer using match_all with paging and sorting
+POST http://localhost:9200/customer/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 5,
+  "from": 0,
+  "sort": [
+    {
+      "username": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+### select * from customer where gender = 'Female' limit 10 offset 0 order by username desc
+POST http://localhost:9200/customer/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "term": {
+      "gender": "Female"
+    }
+  },
+  "size": 5,
+  "from": 0,
+  "sort": [
+    {
+      "username": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+### select * from customer where banks.name = 'BCA' limit 10 offset 0 order by username desc
+POST http://localhost:9200/customer/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "term": {
+      "banks.name": "BCA"
+    }
+  },
+  "size": 10,
+  "from": 0,
+  "sort": [
+    {
+      "username": {
+        "order": "desc"
+      }
+    }
+  ]
+}
