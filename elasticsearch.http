@@ -942,3 +942,142 @@ Content-Type: application/json
     }
   }
 }
+
+### create index parents
+PUT http://localhost:9200/parents
+
+### update parents mapping
+PUT http://localhost:9200/parents/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "first_name": {
+      "type": "text"
+    },
+    "last_name": {
+      "type": "text"
+    },
+    "children": {
+      "properties": {
+        "first_name": {
+          "type": "text"
+        },
+        "last_name": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}
+
+### get parents mapping
+GET http://localhost:9200/parents/_mapping
+
+### insert parent hendy
+POST http://localhost:9200/parents/_doc/1
+Content-Type: application/json
+
+{
+  "first_name": "Hendy",
+  "last_name": "Saputra",
+  "children": [
+    {
+      "first_name": "Joko",
+      "last_name": "Morro"
+    },
+    {
+      "first_name": "Budi",
+      "last_name": "Nugraha"
+    }
+  ]
+}
+
+### get parent 1
+GET http://localhost:9200/parents/_doc/1
+
+### search children
+POST http://localhost:9200/parents/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "children.first_name": "Joko"
+          }
+        },
+        {
+          "match": {
+            "children.last_name": "Nugraha"
+          }
+        }
+      ]
+    }
+  }
+}
+
+### delete parrents index
+DELETE http://localhost:9200/parents
+
+### create parents index
+PUT http://localhost:9200/parents
+
+### update parents mapping with nested children
+PUT http://localhost:9200/parents/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "first_name": {
+      "type": "text"
+    },
+    "last_name": {
+      "type": "text"
+    },
+    "children": {
+      "type": "nested",
+      "properties": {
+        "first_name": {
+          "type": "text"
+        },
+        "last_name": {
+          "type": "text"
+        }
+      }
+    }
+  }
+}
+
+### get parents mapping
+GET http://localhost:9200/parents/_mapping
+
+### search children nested field
+POST http://localhost:9200/parents/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "nested": {
+      "path": "children",
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "match": {
+                "children.first_name": "Joko"
+              }
+            },
+            {
+              "match": {
+                "children.last_name": "Nugraha"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
