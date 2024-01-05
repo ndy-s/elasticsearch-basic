@@ -1300,3 +1300,35 @@ GET http://localhost:9200/_cat/aliases?v
 
 ### cat api - nodes
 GET http://localhost:9200/_cat/nodes?v
+
+### Create repository
+PUT http://localhost:9200/_snapshot/first_backup
+Content-Type: application/json
+
+{
+  "type": "fs",
+  "settings": {
+    "location": "first_backup"
+  }
+}
+
+### list repositories
+GET http://localhost:9200/_snapshot
+
+### create snapshot
+PUT http://localhost:9200/_snapshot/first_backup/snapshot1
+Content-Type: application/json
+
+{
+  "indices": [],
+  "metadata": {
+    "taken_by": "hendy",
+    "taken_because": "backup before upgrading"
+  }
+}
+
+### get snapshot
+GET http://localhost:9200/_snapshot/first_backup/snapshot1
+
+### list snapshots
+GET http://localhost:9200/_cat/snapshot?v
