@@ -1122,7 +1122,14 @@ Content-Type: application/json
     "match": {
       "name": "laptop"
     }
-  }
+  },
+  "sort": [
+    {
+      "name.raw": {
+        "order": "asc"
+      }
+    }
+  ]
 }
 
 ### search mutli fields categories by name.raw
@@ -1133,6 +1140,48 @@ Content-Type: application/json
   "query": {
     "match": {
       "name": "Laptop Murah"
+    }
+  }
+}
+
+### update products mapping
+PUT http://localhost:9200/products/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "name": {
+      "type": "text",
+      "fields": {
+        "raw": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+
+### get products mapping
+GET http://localhost:9200/products/_mapping
+
+### update products by query
+POST http://localhost:9200/products/_update_by_query
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### search products
+POST http://localhost:9200/products/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "name.raw": "Mie Sedap Soto"
     }
   }
 }
