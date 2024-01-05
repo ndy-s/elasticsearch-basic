@@ -1254,8 +1254,37 @@ Content-Type: application/json
 
 {
   "size": 100,
-  "from": 10000,
+  "from": 0,
   "query": {
     "match_all": {}
-  }
+  },
+  "sort": [
+    {
+      "id": {
+        "order": "asc"
+      }
+    }
+  ]
+}
+
+### search categories
+POST http://localhost:9200/categories/_search
+Content-Type: application/json
+
+{
+  "size": 100,
+  "from": 0,
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "id": {
+        "order": "asc"
+      }
+    }
+  ],
+  "search_after": [
+    "10087"
+  ]
 }
